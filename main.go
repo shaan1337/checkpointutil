@@ -47,10 +47,12 @@ func main() {
 		log.Fatalf("Cannot read file %s - %s", config.fileName, err)
 	}
 
-	checkpointValue, err := binary.ReadUvarint(bytes.NewReader(checkpointData))
+	var checkpointValue uint64
+
+	err = binary.Read(bytes.NewReader(checkpointData), binary.LittleEndian, &checkpointValue)
 	if err != nil {
 		log.Fatalf("Cannot read a uint64 from the checkpoint data - %s", err)
 	}
 
-	fmt.Printf("Checkpoint Value: %d", checkpointValue)
+	fmt.Printf("Checkpoint Value: %d\n", checkpointValue)
 }
